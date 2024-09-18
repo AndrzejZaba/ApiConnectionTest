@@ -1,12 +1,15 @@
 ﻿@page "/fetchdata"
+@rendermode InteractiveAuto
 
 <h3>Stock Ticker Data</h3>
 
 <p>Get the data from Polygon.io:</p>
+<button class="btn btn-primary" @onclick="Test">Clear Data</button>
 <button class="btn btn-primary" @onclick="GetTickerData">Get Data</button>
 
 @if (tickerData != null)
 {
     <p>@tickerData</p>
+    <p>@time</p>
 }
 

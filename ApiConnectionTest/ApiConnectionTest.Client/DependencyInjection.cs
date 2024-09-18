@@ -8,7 +8,7 @@ public static class DependencyInjection
     {
         services.AddScoped(sp => new HttpClient { BaseAddress = uri });
 
-        services.AddScoped<PolygonService>();
+        services.AddScoped<IPolygonService, PolygonService>();
 
         return services;
     }

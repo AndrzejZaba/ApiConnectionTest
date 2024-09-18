@@ -1,6 +1,6 @@
 ﻿namespace ApiConnectionTest.Client.Services;
 
-public class PolygonService
+public class PolygonService : IPolygonService
 {
     private readonly HttpClient _httpClient;
     private const string ApiKey = "xdYACsMHyrYcuLq4Ae4nqbTJRwUmu0lN";
