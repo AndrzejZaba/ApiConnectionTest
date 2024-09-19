@@ -1,7 +1,9 @@
-﻿namespace ApiConnectionTest.Client.Services
+﻿using ApiConnectionTest.Client.Models;
+
+namespace ApiConnectionTest.Client.Services
 {
     public interface IPolygonService
     {
-        Task<string> GetStockTickerDataAsync();
+        Task<TickerDetails> GetStockTickerDataAsync();
     }
 }

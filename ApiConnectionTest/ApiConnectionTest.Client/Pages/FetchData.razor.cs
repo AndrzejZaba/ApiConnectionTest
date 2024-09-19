@@ -1,4 +1,5 @@
-﻿using ApiConnectionTest.Client.Services;
+﻿using ApiConnectionTest.Client.Models;
+using ApiConnectionTest.Client.Services;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
 
@@ -6,7 +7,7 @@ namespace ApiConnectionTest.Client.Pages
 {
     public partial class FetchData
     {
-        private string tickerData;
+        private TickerDetails tickerData;
         private string time;
 
         [Inject]
@@ -14,7 +15,16 @@ namespace ApiConnectionTest.Client.Pages
 
         private void Test()
         {
-            tickerData = "";
+            if (tickerData == null)
+                tickerData = new TickerDetails();
+            else
+            {
+                tickerData.Ticker = "";
+                tickerData.WeightedSharesOutstanding = 0;
+                tickerData.Branding.LogoUrl = "";
+                tickerData.Branding.IconUrl = "";
+            }
+
             time = "";
         }
         private async Task GetTickerData()
@@ -26,7 +36,9 @@ namespace ApiConnectionTest.Client.Pages
             }
             catch (Exception ex)
             {
-                tickerData = $"Error: {ex.Message}";
+                tickerData = new TickerDetails();
+                tickerData.Branding = new Branding();
+                tickerData.Ticker = $"Error: {ex.Message}";
             }
             watch.Stop();
             time = watch.ElapsedMilliseconds.ToString();

@@ -1,4 +1,8 @@
-﻿namespace ApiConnectionTest.Client.Services;
+﻿using ApiConnectionTest.Client.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace ApiConnectionTest.Client.Services;
 
 public class PolygonService : IPolygonService
 {
@@ -11,14 +15,22 @@ public class PolygonService : IPolygonService
         _httpClient = httpClient;
     }
 
-    public async Task<string> GetStockTickerDataAsync()
+    public async Task<TickerDetails> GetStockTickerDataAsync()
     {
-        var url = $"{PolygonBaseUrl}/v2/aggs/ticker/AAPL/range/1/day/2023-01-09/2023-01-09?apiKey={ApiKey}";
+        var url = $"{PolygonBaseUrl}/v3/reference/tickers/AAPL?apiKey={ApiKey}";
         var response = await _httpClient.GetAsync(url);
 
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync();
+
+            var fullResponse = JObject.Parse(json);
+            var resultSection = fullResponse["results"].ToString();
+            var ticker =  JsonConvert.DeserializeObject<TickerDetails>(resultSection);
+            ticker.Branding.LogoUrl += $"?apiKey={ApiKey}";
+            ticker.Branding.IconUrl += $"?apiKey={ApiKey}";
+
+            return ticker;
         }
         else
         {

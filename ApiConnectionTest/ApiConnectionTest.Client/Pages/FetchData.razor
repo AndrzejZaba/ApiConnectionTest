@@ -9,7 +9,10 @@
 
 @if (tickerData != null)
 {
-    <p>@tickerData</p>
+    <p>Symbol: @tickerData.Ticker</p>
+    <p>Stock amount: @tickerData.WeightedSharesOutstanding</p>
+    <p>Icon: <img src="@tickerData.Branding.IconUrl" height="100" /> </p>
+    <p>Logo: <img src="@tickerData.Branding.LogoUrl" height="100" /> </p>
     <p>@time</p>
 }
 
